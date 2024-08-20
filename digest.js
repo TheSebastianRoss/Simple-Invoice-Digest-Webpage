@@ -15,11 +15,10 @@ function convertInputTextToArray(inputString) {
 			let entryObject = {
 				count: parseInt(entryFields[1]),
 				name: entryFields[3],
-				dollarCost: parseFloat(entryFields[4]),
 				dollarCostIndividual: parseFloat(entryFields[4])/parseInt(entryFields[1])
 			};
 			
-			// console.log(`Logging ${entryObject.count} count(s) of ${entryObject.name}, costing $${entryObject.dollarCost}`);
+			// console.log(`Logging ${entryObject.count} count(s) of ${entryObject.name}, costing $${entryObject.dollarCostIndividual}`);
 			
 			outputArray.push(entryObject);
 		} catch {
@@ -48,7 +47,6 @@ function summarizeParsedInput(inputArray) {
 			outputArray.push(entry);
 		} else {
 			existingRecord.count += entry.count;
-			existingRecord.dollarCost += entry.dollarCost;
 		}
 	}
 	
@@ -82,10 +80,6 @@ function updateHtmlTableBody(inputArray, tableBody) {
 		let dollarCostIndividualCell = newRow.insertCell();
 		let dollarCostIndividualTextNode = document.createTextNode(`$${entry.dollarCostIndividual.toFixed(2)}`);
 		dollarCostIndividualCell.appendChild(dollarCostIndividualTextNode);
-		
-		let dollarCostCell = newRow.insertCell();
-		let dollarCostTextNode = document.createTextNode(`$${entry.dollarCost.toFixed(2)}`);
-		dollarCostCell.appendChild(dollarCostTextNode);
 	}
 }
 
