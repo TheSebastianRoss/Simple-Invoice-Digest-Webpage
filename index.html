@@ -2,21 +2,38 @@
 <html lang="en">
 	<head>
 		<title>Simple Invoice Digest</title>
+		<script type="text/javascript" src="./digest.js" > </script>
 	</head>
 	<body>
 		<header>
 			<h1>Simple Invoice Digest</h1>
 		</header>
 		<main>
-			<form>
-				<label for="data-input" >Data Input:</label>
-				<br />
-				<textarea id="data-input" name="data-input" ></textarea>
-				<br />
-				
-				<input type="submit" value="Summarize" />
-				<br />
-			</form>
+			<div id="input-zone" >
+				<form id="input-form" >
+					<label for="data-input" >Data Input:</label>
+					<br />
+					<textarea id="data-input" name="data-input" ></textarea>
+					<br />
+					
+					<input type="button" value="Summarize" onclick="digest();" />
+					<br />
+				</form>
+			</div>
+			
+			<div id="output-zone" >
+				<table id="output-table" >
+					<thead id="output-table-head" >
+						<tr>
+							<th>Item Name</th>
+							<th>Count</th>
+							<th>Dollar Cost</th>
+						</tr>
+					</thead>
+					<tbody id="output-table-body" >
+					</tbody>
+				</table>
+			</div>
 		</main>
 		<footer>
 			<p>Copyright &copy; Sebastian Ross <a href="mailto:Sebastian.E.Ross@gmail.com" >Sebastian.E.Ross@gmail.com</a></p>
