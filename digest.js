@@ -12,7 +12,12 @@ function convertInputTextToArray(inputString) {
 	for(let entry of rawEntries) {
 		let entryFields = entry.match(entryRegex);
 		try {
-			let entryObject = {count: parseInt(entryFields[1]), name: entryFields[3], dollarCost: parseFloat(entryFields[4]), dollarCostIndividual: parseFloat(entryFields[4])};
+			let entryObject = {
+				count: parseInt(entryFields[1]),
+				name: entryFields[3],
+				dollarCost: parseFloat(entryFields[4]),
+				dollarCostIndividual: parseFloat(entryFields[4])/parseInt(entryFields[1])
+			};
 			
 			// console.log(`Logging ${entryObject.count} count(s) of ${entryObject.name}, costing $${entryObject.dollarCost}`);
 			
