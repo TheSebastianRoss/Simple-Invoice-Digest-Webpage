@@ -12,7 +12,7 @@ function convertInputTextToArray(inputString) {
 	for(let entry of rawEntries) {
 		let entryFields = entry.match(entryRegex);
 		try {
-			let entryObject = {count: parseInt(entryFields[1]), name: entryFields[3], dollarCost: parseFloat(entryFields[4])};
+			let entryObject = {count: parseInt(entryFields[1]), name: entryFields[3], dollarCost: parseFloat(entryFields[4]), dollarCostIndividual: parseFloat(entryFields[4])};
 			
 			// console.log(`Logging ${entryObject.count} count(s) of ${entryObject.name}, costing $${entryObject.dollarCost}`);
 			
@@ -62,13 +62,21 @@ function updateHtmlTableBody(inputArray, tableBody) {
 	for(let entry of inputArray) {
 		let newRow = tableBody.insertRow();
 		
+		let itemCountCell = newRow.insertCell();
+		let itemCountTextNode = document.createTextNode(entry.count);
+		itemCountCell.appendChild(itemCountTextNode);
+		
+		let itemTypeCell = newRow.insertCell();
+		let itemTypeTextNode = document.createTextNode("TBD");
+		itemTypeCell.appendChild(itemTypeTextNode);
+		
 		let itemNameCell = newRow.insertCell();
 		let itemNameTextNode = document.createTextNode(entry.name);
 		itemNameCell.appendChild(itemNameTextNode);
 		
-		let itemCountCell = newRow.insertCell();
-		let itemCountTextNode = document.createTextNode(entry.count);
-		itemCountCell.appendChild(itemCountTextNode);
+		let dollarCostIndividualCell = newRow.insertCell();
+		let dollarCostIndividualTextNode = document.createTextNode(`$${entry.dollarCostIndividual.toFixed(2)}`);
+		dollarCostIndividualCell.appendChild(dollarCostIndividualTextNode);
 		
 		let dollarCostCell = newRow.insertCell();
 		let dollarCostTextNode = document.createTextNode(`$${entry.dollarCost.toFixed(2)}`);
