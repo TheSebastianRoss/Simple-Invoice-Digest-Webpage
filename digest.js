@@ -1,5 +1,72 @@
 "use strict";
 
+const itemTypes = ["Beer/Cooler/RTD", "Wine", "Liquor", "Non-alcoholic", "Unknown"];
+
+const itemTypeLookup = {
+	"BUD LIGHT 473ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"MICHELOB ULTRA 473ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"STELLA 500ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"CUTWATER TEQUILA PALOMA 355ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"SVNS HARD LEMONADE 355ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"CUTWATER RUM MAI TAI 355ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"BRICKWORKS 1904 473ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"BUDWEISER 473ML":
+		itemTypes.indexOf("Beer/Cooler/RTD"),
+	
+	"DAY TRIPPING RIESLING 5 OZ":
+		itemTypes.indexOf("Wine"),
+	
+	"HUFF ESTATE MINIMALIST MERLOT 5 0Z":
+		itemTypes.indexOf("Wine"),
+	
+	"DUNROBIN SHERRY WOOD WHISKY 1 OZ":
+		itemTypes.indexOf("Liquor"),
+	
+	"DUNROBIN VODKA 1 OZ":
+		itemTypes.indexOf("Liquor"),
+	
+	"DUNROBIN WHISKY 1 OZ":
+		itemTypes.indexOf("Liquor"),
+	
+	"DUNROBIN EARL GREY GIN 1 OZ":
+		itemTypes.indexOf("Liquor"),
+	
+	"DUNROBIN RUM 1 OZ":
+		itemTypes.indexOf("Liquor"),
+	
+	"PEPSI 591ML":
+		itemTypes.indexOf("Non-alcoholic"),
+	
+	"7UP 591ML":
+		itemTypes.indexOf("Non-alcoholic"),
+	
+	"PEPSI ZERO 591ML":
+		itemTypes.indexOf("Non-alcoholic"),
+	
+	"AQUAFINA WATER 591ML":
+		itemTypes.indexOf("Non-alcoholic"),
+	
+	"DIET PEPSI 591ML":
+		itemTypes.indexOf("Non-alcoholic"),
+	
+	"SCHWEPPES GINGER ALE 591ML":
+		itemTypes.indexOf("Non-alcoholic")
+}
+
 function convertInputTextToArray(inputString) {
 	let outputArray = [];
 	let malformedEntries = [];
@@ -15,10 +82,11 @@ function convertInputTextToArray(inputString) {
 			let entryObject = {
 				count: parseInt(entryFields[1]),
 				name: entryFields[3],
-				dollarCostIndividual: parseFloat(entryFields[4])/parseInt(entryFields[1])
+				dollarCostIndividual: parseFloat(entryFields[4])/parseInt(entryFields[1]),
+				itemType: (itemTypeLookup[entryFields[3]] !== undefined)? itemTypeLookup[entryFields[3]]: itemTypes.indexOf("Unknown")
 			};
 			
-			// console.log(`Logging ${entryObject.count} count(s) of ${entryObject.name}, costing $${entryObject.dollarCostIndividual}`);
+			// console.log(`Logging ${entryObject.count} count(s) of ${entryObject.name} which is type ${itemTypes[entryObject.itemType]}(${entryObject.itemType}), costing $${entryObject.dollarCostIndividual}`);
 			
 			outputArray.push(entryObject);
 		} catch {
@@ -38,7 +106,7 @@ function convertInputTextToArray(inputString) {
 	return outputArray;
 }
 
-function summarizeParsedInput(inputArray) {
+function summarizeParsedInputByItem(inputArray) {
 	let outputArray = [];
 	
 	for(let entry of inputArray) {
@@ -50,6 +118,33 @@ function summarizeParsedInput(inputArray) {
 		}
 	}
 	
+	outputArray.sort((a, b) => (b.count - a.count));
+	outputArray.sort((a, b) => (a.itemType - b.itemType));
+	
+	return outputArray;
+}
+
+function summarizeParsedInputByType(inputArray) {
+	let outputArray = [];
+	
+	for(let entry of inputArray) {
+		let existingRecord = outputArray.find(a => (a.itemType == entry.itemType));
+		if(existingRecord === undefined) {
+			let newRecord = {
+				count: entry.count,
+				itemType: entry.itemType,
+				totalCost: (entry.dollarCostIndividual * entry.count)
+			};
+			
+			outputArray.push(newRecord);
+		} else {
+			existingRecord.count += entry.count;
+			existingRecord.totalCost += (entry.dollarCostIndividual * entry.count);
+		}
+	}
+	
+	outputArray.sort((a, b) => (a.itemType - b.itemType));
+	
 	return outputArray;
 }
 
@@ -59,7 +154,7 @@ function clearHtmlTableBody(tableBody) {
 	}
 }
 
-function updateHtmlTableBody(inputArray, tableBody) {
+function updateHtmlItemTableBody(inputArray, tableBody) {
 	clearHtmlTableBody(tableBody);
 	
 	for(let entry of inputArray) {
@@ -70,7 +165,7 @@ function updateHtmlTableBody(inputArray, tableBody) {
 		itemCountCell.appendChild(itemCountTextNode);
 		
 		let itemTypeCell = newRow.insertCell();
-		let itemTypeTextNode = document.createTextNode("TBD");
+		let itemTypeTextNode = document.createTextNode(itemTypes[entry.itemType]);
 		itemTypeCell.appendChild(itemTypeTextNode);
 		
 		let itemNameCell = newRow.insertCell();
@@ -83,13 +178,50 @@ function updateHtmlTableBody(inputArray, tableBody) {
 	}
 }
 
+function updateHtmlTypeTableBody(inputArray, tableBody) {
+	clearHtmlTableBody(tableBody);
+	
+	let totalSales = 0;
+	let totalCost = 0.0;
+	
+	for(let entry of inputArray) {
+		totalSales += entry.count;
+		totalCost += entry.totalCost;
+	}
+	
+	for(let entry of inputArray) {
+		let newRow = tableBody.insertRow();
+		
+		let itemCountCell = newRow.insertCell();
+		let itemCountTextNode = document.createTextNode(entry.count);
+		itemCountCell.appendChild(itemCountTextNode);
+		
+		let itemTypeCell = newRow.insertCell();
+		let itemTypeTextNode = document.createTextNode(itemTypes[entry.itemType]);
+		itemTypeCell.appendChild(itemTypeTextNode);
+		
+		let salesCell = newRow.insertCell();
+		let salesTextNode = document.createTextNode(`${(entry.count/totalSales * 100).toFixed(2)}%`);
+		salesCell.appendChild(salesTextNode);
+		
+		let costCell = newRow.insertCell();
+		let costTextNode = document.createTextNode(`${(entry.totalCost/totalCost * 100).toFixed(2)}%`);
+		costCell.appendChild(costTextNode);
+	}
+}
+
 function digest() {
 	let htmlDataInput = document.getElementById("data-input");
-	let htmlOutputTableBody = document.getElementById("output-table-body");
+	let htmlOutputItemTableBody = document.getElementById("output-item-table-body");
+	let htmlOutputTypeTableBody = document.getElementById("output-type-table-body");
 	
 	let userInput = htmlDataInput.value;
 	let parsedInput = convertInputTextToArray(userInput);
-	let rawOutput = summarizeParsedInput(parsedInput);
-	let formattedOutput = updateHtmlTableBody(rawOutput, htmlOutputTableBody);
+	
+	let rawItemOutput = summarizeParsedInputByItem(parsedInput);
+	updateHtmlItemTableBody(rawItemOutput, htmlOutputItemTableBody);
+	
+	let rawTypeOutput = summarizeParsedInputByType(parsedInput);
+	updateHtmlTypeTableBody(rawTypeOutput, htmlOutputTypeTableBody);
 }
 
