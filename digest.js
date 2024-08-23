@@ -225,3 +225,10 @@ function digest() {
 	updateHtmlTypeTableBody(rawTypeOutput, htmlOutputTypeTableBody);
 }
 
+function copyTableContentsToClipboard(tableID) {
+	let htmlTable = document.getElementById(tableID);
+	let copyText = htmlTable.innerText;
+	
+	navigator.clipboard.writeText(copyText);
+}
+
