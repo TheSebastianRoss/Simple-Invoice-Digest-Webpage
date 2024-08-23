@@ -1,31 +1,31 @@
 "use strict";
 
-const itemTypes = ["Beer/Cooler/RTD", "Wine", "Liquor", "Non-alcoholic", "Unknown"];
+const itemTypes = ["Beer / Cooler / RTD", "Wine", "Liquor", "Non-alcoholic", "Unknown"];
 
 const itemTypeLookup = {
 	"BUD LIGHT 473ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"MICHELOB ULTRA 473ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"STELLA 500ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"CUTWATER TEQUILA PALOMA 355ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"SVNS HARD LEMONADE 355ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"CUTWATER RUM MAI TAI 355ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"BRICKWORKS 1904 473ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"BUDWEISER 473ML":
-		itemTypes.indexOf("Beer/Cooler/RTD"),
+		itemTypes.indexOf("Beer / Cooler / RTD"),
 	
 	"DAY TRIPPING RIESLING 5 OZ":
 		itemTypes.indexOf("Wine"),
