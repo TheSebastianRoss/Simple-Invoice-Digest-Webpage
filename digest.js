@@ -230,5 +230,48 @@ function copyTableContentsToClipboard(tableID) {
 	let copyText = htmlTable.innerText;
 	
 	navigator.clipboard.writeText(copyText);
+	
+	showToast("Table contents copied to clipboard.", "success", 5000);
+}
+
+// Toast notification referenced from https://www.geeksforgeeks.org/how-to-make-a-toast-notification-in-html-css-and-javascript/
+
+let toastIcons = {
+    success:
+		'<span class="material-symbols-outlined">task_alt</span>',
+    danger:
+		'<span class="material-symbols-outlined">error</span>',
+    warning:
+		'<span class="material-symbols-outlined">warning</span>',
+    info:
+		'<span class="material-symbols-outlined">info</span>'
+};
+
+function showToast(message, toastType, durationMS) {
+	if(!Object.keys(toastIcons).includes(toastType)) {
+		toastType = "info";
+	}
+	
+	if((typeof durationMS) != "number") {
+		durationMS = 5000;
+	} else if(durationMS < 0) {
+		durationMS = 0;
+	}
+	
+	let messageBox = document.createElement("div");
+	messageBox.classList.add("toast", `toast-${toastType}`);
+	messageBox.innerHTML = `
+	<div class="toast-content-wrapper">
+		<div class="toast-message">${message}</div>
+		<div class="toast-progress"></div>
+	</div>`;
+	messageBox.querySelector(".toast-progress").style.animationDuration = `${durationMS / 1000}s`;
+	
+	let existingToast = document.body.querySelector(".toast");
+	if(existingToast) {
+		existingToast.remove();
+	}
+	
+	document.body.appendChild(messageBox);
 }
 
