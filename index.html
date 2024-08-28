@@ -23,35 +23,51 @@
 			</div>
 			
 			<div id="output-zone" >
-				<h2>Item Summary</h2>
-				<button onclick="copyTableContentsToClipboard('output-item-table');" >Copy Table Contents</button>
-				<table id="output-item-table" >
-					<thead id="output-item-table-head" >
-						<tr>
-							<th>Quantity</th>
-							<th>Item Type</th>
-							<th>Item Name</th>
-							<th>Price Each</th>
-						</tr>
-					</thead>
-					<tbody id="output-item-table-body" >
-					</tbody>
-				</table>
+				<div class="table-section" >
+					<div class="flex-container" >
+						<div class="flex-item" >
+							<h2>Item Summary</h2>
+						</div>
+						<div class="flex-item" >
+							<button onclick="copyTableContentsToClipboard('output-item-table');" >Copy Table Contents</button>
+						</div>
+					</div>
+					<table id="output-item-table" >
+						<thead id="output-item-table-head" >
+							<tr>
+								<th>Quantity</th>
+								<th>Item Type</th>
+								<th>Item Name</th>
+								<th>Price Each</th>
+							</tr>
+						</thead>
+						<tbody id="output-item-table-body" >
+						</tbody>
+					</table>
+				</div>
 				
-				<h2>Type Summary</h2>
-				<button onclick="copyTableContentsToClipboard('output-type-table');" >Copy Table Contents</button>
-				<table id="output-type-table" >
-					<thead id="output-type-table-head" >
-						<tr>
-							<th>Quantity</th>
-							<th>Item Type</th>
-							<th>Percentage of Units Sold</th>
-							<th>Percentage of Money Charged</th>
-						</tr>
-					</thead>
-					<tbody id="output-type-table-body" >
-					</tbody>
-				</table>
+				<div class="table-section" >
+					<div class="flex-container" >
+						<div class="flex-item" >
+							<h2>Type Summary</h2>
+						</div>
+						<div class="flex-item" >
+							<button onclick="copyTableContentsToClipboard('output-type-table');" >Copy Table Contents</button>
+						</div>
+					</div>
+					<table id="output-type-table" >
+						<thead id="output-type-table-head" >
+							<tr>
+								<th>Quantity</th>
+								<th>Item Type</th>
+								<th>Percentage of Units Sold</th>
+								<th>Percentage of Money Charged</th>
+							</tr>
+						</thead>
+						<tbody id="output-type-table-body" >
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</main>
 		<footer>
