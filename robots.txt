@@ -1,0 +1,7 @@
+
+# Welcome to this project's robots.txt
+# Please do not scrape this project.
+
+User-agent: *
+Disallow: /
+
