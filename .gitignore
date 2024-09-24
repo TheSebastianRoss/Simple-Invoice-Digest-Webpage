@@ -1,0 +1,5 @@
+
+# Folder for non-repository files (e.g., files client sent for reference)
+.ignore
+.ignore/*
+
